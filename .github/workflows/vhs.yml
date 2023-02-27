@@ -1,0 +1,39 @@
+name: Create demo gif
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "master"
+
+permissions:
+  contents: write
+
+jobs:
+  create-gif:
+    name: Create demo gif
+    runs-on: ubuntu-latest
+
+    steps: 
+      - uses: actions/checkout@v3
+
+      - name: Install neofetch
+        run: sudo apt install -y neofetch
+
+      - name: Render gif with VHS
+        uses: charmbracelet/vhs-action@v1
+        with:
+          path: './demo.tape'
+
+      - name: Create commit
+        uses: stefanzweifel/git-auto-commit-action@v4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          commit_message: Update generated VHS GIF
+          branch: master
+          commit_user_name: vhs-action
+          commit_user_email: actions@github.com
+          commit_author: vhs-action <actions@github.com>
+          file_pattern: '*.gif'
+
