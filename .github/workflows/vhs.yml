@@ -23,7 +23,7 @@ jobs:
       - name: Render gif with VHS
         uses: charmbracelet/vhs-action@v1
         with:
-          path: './demo.tape'
+          path: 'demo.tape'
 
       - name: Create commit
         uses: stefanzweifel/git-auto-commit-action@v4
